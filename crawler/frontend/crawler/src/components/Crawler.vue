@@ -62,7 +62,7 @@
 
                     <div class="form-group row my-6 justify-center flex">
                         <div v-if = "!isLoading">
-                            <button type="submit" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" @click ="crawl()" >
+                            <button type="button" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" @click ="crawl()" >
                                 Crawl 
                             </button>
                         </div>
@@ -96,7 +96,7 @@
 
                         <div class="flex justify-center">
                             <div v-if = "!isLoading">
-                                <button type="submit" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" @click ="verifyPassword()" >
+                                <button type="button" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" @click ="verifyPassword()" >
                                     Is my password lame?  
                                 </button>
                             </div>

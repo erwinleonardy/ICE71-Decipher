@@ -30,8 +30,6 @@ class Driver():
         processed = re.sub('[^a-zA-Z ]', '', processed)
         processed = re.sub('[\n]', '', processed)
 
-        from nltk.corpus import stopwords
-
         # Bring in the default English NLTK stop words
         stoplist = stopwords.words('english')
 
