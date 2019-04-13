@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-  <div>
-    arne is gay
-  </div>
     <router-view/>
   </div>
 </template>

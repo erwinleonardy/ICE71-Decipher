@@ -18,17 +18,9 @@
         </div>
         
         <!-- exclude -->
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label for="exclude" class="col-md-4 col-form-label text-md-right">
                 exclude
-                <popper trigger="hover" :options = "{placement: 'bottom'}">
-                    <div class="popper tw-font-hairline tw-text-grey-dark">
-                        What kind of tags do you want to exclude
-                    </div>
-                    <button slot="reference">   
-                        <i class="fas fa-exclamation-circle tw-text-grey-dark tw-cursor-pointer"></i>
-                    </button>
-                </popper>
             </label>
 
             <div class="col-md-6">
@@ -41,20 +33,12 @@
                     required autofocus
                 >
             </div>
-        </div>
+        </div> -->
 
         <!-- Password -->
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label for="password" class="col-md-4 col-form-label text-md-right">
                 Password
-                <popper trigger="hover" :options = "{placement: 'bottom'}">
-                    <div class="popper tw-font-hairline tw-text-grey-dark">
-                        Your password should contain a minimum of 6 characters
-                    </div>
-                    <button slot="reference">   
-                        <i class="fas fa-exclamation-circle tw-text-grey-dark tw-cursor-pointer"></i>
-                    </button>
-                </popper>
             </label>
 
             <div class="col-md-6">
@@ -80,18 +64,14 @@
                     <img src = "/assets/img/loader.gif" alt = "Loading...">
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
-    import 'vue-popperjs/dist/css/vue-popper.css';
-    import Popper from 'vue-popperjs';
-    
+
     export default {
-        components: {
-            'popper': Popper
-        },
+        name: 'Crawler',
 
         data() {
             return {
@@ -99,25 +79,25 @@
                 error: [],
                 isLoading: false,
             }
-        }, 
+        },
 
-        methods: {
-            crawl() {
-                this.isLoading = true;
+        // methods: {
+        //     crawl() {
+        //         this.isLoading = true;
 
-                axios.post("/crawl", {
-                    url: this.url,
-                    exclude: this.exclude
-                })
-                .then(response => {
-                //    this.$router.replace( "/login");
-                    this.isLoading = false;
-                })
-                .catch((error) => {
-                    // this.error = error.response.data.errors;
-                    this.isLoading = false;
-                });
-            },
-        }
+        //         axios.post("/crawl", {
+        //             url: this.url,
+        //             exclude: this.exclude
+        //         })
+        //         .then(response => {
+        //             //    this.$router.replace( "/login");
+        //             this.isLoading = false;
+        //         })
+        //         .catch((error) => {
+        //             // this.error = error.response.data.errors;
+        //             this.isLoading = false;
+        //         });
+        //     },
+        // }
     }
 </script>
