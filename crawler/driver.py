@@ -1,10 +1,10 @@
-import requests
+import requests, time, re
 from requests import get
 import urllib.request
-import time
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
+from nltk.corpus import stopwords
 
 from flask import jsonify
 
@@ -25,9 +25,12 @@ class Driver():
         str_cells = str(all_links)
         cleantext = BeautifulSoup(str_cells, "lxml").get_text()
 
-        print(cleantext)
-        
-        return jsonify(cleantext)
+        processed = re.sub('\[[A-Za-z0-9]*\]', '', cleantext)
+        processed = re.sub('  ', ' ', cleantext)
+        processed = re.sub('[^a-zA-Z ]', '', processed)
+        processed = re.sub('[\n]', '', processed)
+
+        return jsonify(processed)
 
     @staticmethod
     def simple_get(url):
