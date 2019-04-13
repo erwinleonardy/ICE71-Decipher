@@ -6,13 +6,9 @@ from flask_cors import CORS
 from crawler import app
 from crawler.driver import Driver
 
-<<<<<<< HEAD
 @app.route('/crawl',  methods=['POST'])
-=======
-@app.route('/crawl', methods=['GET', 'POST'])
->>>>>>> ef55ba8a57bd4add6e931fa059849fad9c86b3d1
 def index():
-    print(requests.form['url'])
+    print(requests)
     url = 'https://en.wikipedia.org/wiki/Donald_Trump'
     return Driver.crawler(url)
 
