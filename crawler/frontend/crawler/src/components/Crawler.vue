@@ -150,9 +150,10 @@
                 password:'',
                 numberOfURL:'',
                 isLoading: false,
-
-                url: [],
-                exclude: '',
+                form:{
+                    url: [],
+                    exclude: '',
+                },
                 
                 dictionary: [],
             }
@@ -191,16 +192,14 @@
 
 
                 const config = {
-                    headers: { 'Access-Control-Allow-Origin': '*' , 'content-type': 'application/json; charset=utf-8' }
+                    headers: { 'Access-Control-Allow-Origin': '*' , 
+                    'content-type': 'application/json; charset=utf-8' }
                 };
 
-                axios.post("http://127.0.0.1:5000/crawl", {
-                    url: this.url,
-                    exclude: this.exclude
-                },config)
+                axios.post("http://127.0.0.1:5000/crawl", this.form ,config)
                 .then(response => {
                     console.log(response);
-                    this.dictionary = response.data.dictionary;
+                    this.dictionary = response;
                     this.isLoading = false;
                     //    this.$router.replace( "/action?");
                 })
