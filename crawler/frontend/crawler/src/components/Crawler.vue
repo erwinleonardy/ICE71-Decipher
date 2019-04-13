@@ -169,10 +169,35 @@
             crawl() {
                 this.isLoading = true;
 
-                this.$http.post("http://127.0.0.1:5000/api/arne/is/gay/and/bachelor", {
+            //     $.ajax({
+            //         url: "http://127.0.0.1:5000/api/arne/is/gay/and/bachelor",
+            //         type: "POST",
+            //         crossDomain: true,
+            //         dataType: 'jsonp',
+            //     success: function(data, status, jqXHR) {
+            //         console.log(data)
+            //         // scope.$emit("get-toggle-data", data);
+            //     },
+            //     error: function(jqXHR, status, err) {
+            //         console.log(err);
+            //     },
+            //     complete: function(jqXHR, status) {}
+            // });
+
+            //     axios.get("https://data.gov.sg/api/action/datastore_search?resource_id=8b94f596-91fd-4545-bf9e-7a426493b674&limit=5")
+            //     .then(res => {
+            //         console.log(res);
+            //     })
+
+
+                const config = {
+                    headers: { 'Access-Control-Allow-Origin': '*' }
+                };
+
+                axios.post("http://127.0.0.1:5000/crawl", {
                     url: this.url,
                     exclude: this.exclude
-                })
+                },config)
                 .then(response => {
                     console.log(response);
                     this.dictionary = response.data.dictionary;

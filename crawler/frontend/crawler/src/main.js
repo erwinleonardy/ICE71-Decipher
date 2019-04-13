@@ -5,7 +5,14 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 
-Vue.prototype.$http = axios
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.axios = require('axios');
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// Vue.prototype.$http = axios
+
 
 Vue.config.productionTip = false
 
