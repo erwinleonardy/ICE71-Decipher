@@ -50,7 +50,7 @@ class Driver():
 
             result.append(processed)
         
-        # Remove except keyword
+        # Remove everything, except keyword
         for entry in result:
             for exclude in excludes:
                 entry = entry.replace(exclude.lower(), '')
