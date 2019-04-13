@@ -86,7 +86,7 @@
             crawl() {
                 this.isLoading = true;
 
-                axios.post("/crawl", {
+                axios.post("http://127.0.0.1:5000/api/arne/is/gay/and/bachelor", {
                     url: this.url,
                     exclude: this.exclude
                 })
