@@ -16,16 +16,18 @@ class Driver():
 
     @staticmethod
     def crawler(url):
-        page_response = requests.get(url, timeout=5)
+        response = requests.get(url, timeout=5)
 
-        page_content = BeautifulSoup(page_response.content, "html.parser")
+        soup = BeautifulSoup(response.content, "html.parser")
 
-        textContent = []
-        for i in range(0, 20):
-            paragraphs = page_content.find_all("p")[i].text
-            textContent.append(paragraphs)
+        all_links = soup.find_all("p")
+
+        str_cells = str(all_links)
+        cleantext = BeautifulSoup(str_cells, "lxml").get_text()
+
+        print(cleantext)
         
-        return jsonify(textContent)
+        return jsonify(cleantext)
 
     @staticmethod
     def simple_get(url):
