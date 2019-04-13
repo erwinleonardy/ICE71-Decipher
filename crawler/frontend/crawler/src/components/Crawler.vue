@@ -18,7 +18,7 @@
         </div>
         
         <!-- exclude -->
-        <!-- <div class="form-group row">
+        <div class="form-group row">
             <label for="exclude" class="col-md-4 col-form-label text-md-right">
                 exclude
             </label>
@@ -33,10 +33,10 @@
                     required autofocus
                 >
             </div>
-        </div> -->
+        </div>
 
         <!-- Password -->
-        <!-- <div class="form-group row">
+        <div class="form-group row">
             <label for="password" class="col-md-4 col-form-label text-md-right">
                 Password
             </label>
@@ -64,7 +64,7 @@
                     <img src = "/assets/img/loader.gif" alt = "Loading...">
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -81,23 +81,23 @@
             }
         },
 
-        // methods: {
-        //     crawl() {
-        //         this.isLoading = true;
+        methods: {
+            crawl() {
+                this.isLoading = true;
 
-        //         axios.post("/crawl", {
-        //             url: this.url,
-        //             exclude: this.exclude
-        //         })
-        //         .then(response => {
-        //             //    this.$router.replace( "/login");
-        //             this.isLoading = false;
-        //         })
-        //         .catch((error) => {
-        //             // this.error = error.response.data.errors;
-        //             this.isLoading = false;
-        //         });
-        //     },
-        // }
+                axios.post("/crawl", {
+                    url: this.url,
+                    exclude: this.exclude
+                })
+                .then(response => {
+                    //    this.$router.replace( "/login");
+                    this.isLoading = false;
+                })
+                .catch((error) => {
+                    // this.error = error.response.data.errors;
+                    this.isLoading = false;
+                });
+            },
+        }
     }
 </script>
