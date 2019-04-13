@@ -53,8 +53,11 @@ class Driver():
         # Remove except keyword
         for entry in result:
             for exclude in excludes:
-                cleaned.append(entry.replace(exclude.lower() + ' ', ''))
+                entry = entry.replace(exclude.lower(), '')
+            cleaned.append(entry)
 
+        if not excludes:
+            return jsonify(result)
         return jsonify(cleaned)
 
     @staticmethod
