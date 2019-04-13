@@ -86,18 +86,18 @@
             crawl() {
                 this.isLoading = true;
 
-                // axios.post("/crawl", {
-                //     url: this.url,
-                //     exclude: this.exclude
-                // })
-                // .then(response => {
-                //     //    this.$router.replace( "/login");
-                //     this.isLoading = false;
-                // })
-                // .catch((error) => {
-                //     // this.error = error.response.data.errors;
-                //     this.isLoading = false;
-                // });
+                axios.post("/crawl", {
+                    url: this.url,
+                    exclude: this.exclude
+                })
+                .then(response => {
+                    //    this.$router.replace( "/login");
+                    this.isLoading = false;
+                })
+                .catch((error) => {
+                    // this.error = error.response.data.errors;
+                    this.isLoading = false;
+                });
             },
         }
     }
