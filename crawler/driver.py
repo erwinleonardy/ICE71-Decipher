@@ -41,7 +41,7 @@ class Driver():
         
         processed = ' '.join([word for word in processed if len(processed) > 1])
 
-        print(processed)
+        # print(processed)
 
         return jsonify(processed)
 
