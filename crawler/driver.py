@@ -30,6 +30,18 @@ class Driver():
         processed = re.sub('[^a-zA-Z ]', '', processed)
         processed = re.sub('[\n]', '', processed)
 
+        from nltk.corpus import stopwords
+
+        # Bring in the default English NLTK stop words
+        stoplist = stopwords.words('english')
+
+        # Apply the stoplist to the text
+        processed = [word for word in processed.lower().split() if word not in stoplist]
+        
+        processed = ' '.join([word for word in processed if len(processed) > 1])
+
+        print(processed)
+
         return jsonify(processed)
 
     @staticmethod
