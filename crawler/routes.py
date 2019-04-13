@@ -1,14 +1,14 @@
-import requests
-from requests import get
+from flask import request
 from bs4 import BeautifulSoup
 from flask_cors import CORS
 
 from crawler import app
 from crawler.driver import Driver
 
-@app.route('/crawl',  methods=['POST'])
+@app.route('/crawl',  methods=['GET', 'POST'])
 def index():
-    print(requests)
+    print(request.form['url'])
+    print(request.form['exclude'])
     url = 'https://en.wikipedia.org/wiki/Donald_Trump'
     return Driver.crawler(url)
 

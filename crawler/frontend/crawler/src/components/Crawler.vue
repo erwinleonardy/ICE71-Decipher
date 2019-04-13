@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id ="testing">
         <div class="h-24 mb-4">
             <img class ="h-24" src = "../assets/img/crawler.png" alt = "Crawl">
         </div>
@@ -78,7 +78,7 @@
             <div class="w-2/5">
                 <div class="card">
                     <div class="card-header tw-text-grey-darker">Test password</div>
-                    <div class = "w-full mb-4" v-if = "dictionary.length == 0">
+                    <div class = "w-full mb-4" v-if = "tokenizeWord.length > 0">
                         <div class="flex items-center my-4">                
                             <div class = "w-48 ml-32 text-lg font-semibold font-montserrat text-grey-dark">
                                 Password
@@ -150,9 +150,16 @@
                 password:'',
                 numberOfURL:'',
                 isLoading: false,
-                    url: [],
-                    exclude: '',
-                dictionary: [],
+                url: [],
+                exclude: '',
+                dictionary: '',
+                tokenizeWord: [],
+            }
+        },
+
+        watch:{
+            dictionary() {
+                this.tokenizeWord = this.dictionary.split(' ');
             }
         },
 
@@ -167,47 +174,102 @@
             crawl() {
                 this.isLoading = true;
 
-            //     $.ajax({
-            //         url: "http://127.0.0.1:5000/crawl",
- 
-            //         type: "POST",
-            //         crossDomain: true,
-            //         dataType: 'application/json',
-            //         data: this.form,
-            //     success: function(data, status, jqXHR) {
-            //         console.log(data)
-            //         // scope.$emit("get-toggle-data", data);
-            //     },
-            //     error: function(jqXHR, status, err) {
-            //         console.log(err);
-            //     },
-            //     complete: function(jqXHR, status) {}
-            // });
-
-            //     axios.get("https://data.gov.sg/api/action/datastore_search?resource_id=8b94f596-91fd-4545-bf9e-7a426493b674&limit=5")
-            //     .then(res => {
-            //         console.log(res);
-            //     })
-
-
-                const config = {
-                    headers: { 'Access-Control-Allow-Origin': '*' , 
-                    'content-type': 'application/json; charset=utf-8' }
-                };
-
-                axios.post("http://127.0.0.1:5000/crawl",{
-                    url: this.url,
-                    exclude: this.exclude
-                },config)
-                .then(response => {
-                    console.log(response);
-                    this.dictionary = response;
-                    this.isLoading = false;
-                    //    this.$router.replace( "/action?");
+                $.ajax({
+                    type: 'post',
+                    url: 'http://127.0.0.1:5000/crawl',
+                    // data: fd,
+                    data: $('#myForm').serialize() + "&url=" + this.url + "&exclude=" + this.exclude,
+                    mimeType: "multipart/form-data",
+                //     // contentType: false,
+                    success: function(data, status, jqXHR) {
+                        console.log(data)
+                        this.isLoading = false;
+                    },
+                    error: function(jqXHR, status, err) {
+                        console.log(err);
+                        this.isLoading = false;
+                    },
+                    complete: function(jqXHR, status) {}
                 })
-                .catch((error) => {
-                    // this.error = error.response.data.errors;
-                    this.isLoading = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // fd.append('url', this.url);
+                // fd.append('exclude', this.exclude);
+
+                // const config = {
+                //     headers: { 'Access-Control-Allow-Origin': '*' , 
+                //     // 'content-type': 'application/json; charset=utf-8' 
+                //         'Content-Type': 'multipart/form-data'
+                //     },
+                //     // mimeType: 'multipart/form-data',
+                //     // contentType: false
+                // };
+
+                // axios.post('http://127.0.0.1:5000/crawl', fd, config)
+                // .then((res) => {
+                //     this.isLoading = false;
+                // })
+                // .catch((error) => {
+                //     this.error = error.response.data.errors;
+                //     this.isLoading = false;
+                // })
+
+
+                
+                // // const config = {
+                // //     headers: { 'Access-Control-Allow-Origin': '*' , 
+
+                // //     // 'content-type': 'application/json; charset=utf-8' 
+                // //     },
+                // //     mimeType: 'multipart/form-data'
+                // // };
+
+                // axios.post("http://127.0.0.1:5000/crawl",{
+                //     url: this.url,
+                //     exclude: this.exclude
+                // },config)
+                // .then(response => {
+                //     console.log(response);
+                //     this.dictionary = response.data;
+                //     this.isLoading = false;
+                //     //    this.$router.replace( "/action?");
+                // })
+                // .catch((error) => {
+                //     // this.error = error.response.data.errors;
+                //     this.isLoading = false;
+                // });
+            },
+
+            verifyPassword() {
+                this.tokenizeWord.forEach( word =>{
+                    word.match(/this.password/);
+                    console.log(word);
+                    // this.password
                 });
             },
         }
