@@ -14,8 +14,11 @@ class Driver():
         return jsonify({'Arne the Project Manager who does nothing': text})
 
     @staticmethod
-    def crawler(urls):
+    def crawler(urls, excludes):
         result = []
+        cleaned = []
+
+        print (urls)
 
         for url in urls:
             response = requests.get(url, timeout=5)
@@ -42,11 +45,17 @@ class Driver():
             # Apply the stoplist to the text
             processed = [word for word in processed.lower().split() if word not in stoplist]
             
+            # Remove single character
             processed = ' '.join([word for word in processed if len(processed) > 1])
 
             result.append(processed)
         
-        return jsonify(result)
+        # Remove except keyword
+        for entry in result:
+            for exclude in excludes:
+                cleaned.append(entry.replace(exclude.lower() + ' ', ''))
+
+        return jsonify(cleaned)
 
     @staticmethod
     def simple_get(url):

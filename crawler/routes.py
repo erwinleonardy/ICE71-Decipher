@@ -7,12 +7,10 @@ from crawler.driver import Driver
 
 @app.route('/crawl',  methods=['GET', 'POST'])
 def index():
-    print(request.form['url'].split(','))
-    print(request.form['exclude'])
-    
-    url = request.form['url'].split(',')
+    url = request.form['url'].split(',') if len(request.form['url']) > 0 else ""
+    exclude = request.form['exclude'].split(';') if len(request.form['exclude']) > 0 else ""
 
-    return Driver.crawler(url)
+    return Driver.crawler(url, exclude)
 
 @app.route('/api/arne/is/gay/and/bachelor', methods=['GET', 'POST'])
 def get_tasks():
