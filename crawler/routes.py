@@ -20,7 +20,7 @@ def index():
 
     #print(response)
 
-    return Driver.crawler(url)
+    return cleantext
 
 @app.route('/arne/is/gay/and/bachelor', methods=['GET'])
 def get_tasks():
