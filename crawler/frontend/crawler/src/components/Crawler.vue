@@ -150,11 +150,8 @@
                 password:'',
                 numberOfURL:'',
                 isLoading: false,
-                form:{
                     url: [],
                     exclude: '',
-                },
-                
                 dictionary: [],
             }
         },
@@ -171,10 +168,12 @@
                 this.isLoading = true;
 
             //     $.ajax({
-            //         url: "http://127.0.0.1:5000/api/arne/is/gay/and/bachelor",
+            //         url: "http://127.0.0.1:5000/crawl",
+ 
             //         type: "POST",
             //         crossDomain: true,
-            //         dataType: 'jsonp',
+            //         dataType: 'application/json',
+            //         data: this.form,
             //     success: function(data, status, jqXHR) {
             //         console.log(data)
             //         // scope.$emit("get-toggle-data", data);
@@ -196,7 +195,10 @@
                     'content-type': 'application/json; charset=utf-8' }
                 };
 
-                axios.post("http://127.0.0.1:5000/crawl", this.form ,config)
+                axios.post("http://127.0.0.1:5000/crawl",{
+                    url: this.url,
+                    exclude: this.exclude
+                },config)
                 .then(response => {
                     console.log(response);
                     this.dictionary = response;
