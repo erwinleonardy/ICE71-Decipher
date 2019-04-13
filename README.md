@@ -1,21 +1,21 @@
 # ICE71-Decipher
 
-# Web crawling dictionary generator
-A web crawler that crawls all social media pages of selected target in order to generate a password list used for speared dictionary attack.
+### Web crawling password checker
+A web crawler that crawls all social media pages of desired URLs in order to generate a password profile list of our target. 
 
-# The Problem
+## The Problem
 
-- Brute force attack requires high time complexity
-- Infeasible for a password of reasonable entropy
-- Dictionary attack requires a good combo list which is often lacking
+- Humans are bad with password
+- People tend to use password that contains their personal information
+- These information are often readily available online
 
-# Our solution
+## Our solution
 
-- Make use of existing web crawlers to gain information on target
-- Use the information to generate the password list
-- List to be used by existing password cracking tools
+- Make use of a web crawler to gain information on target
+- Check the password with the data we have collected
+- Determine if the user should use that password
 
-# Credits
+## Credits
 - [Arne Sim](https://github.com/KFSPC8)
 - [Erwin Leonardy](https://github.com/erwinleonardy)
 - [Li JinQuan](https://github.com/lijq33)
