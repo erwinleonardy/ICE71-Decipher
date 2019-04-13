@@ -7,9 +7,11 @@ from crawler.driver import Driver
 
 @app.route('/crawl',  methods=['GET', 'POST'])
 def index():
-    print(request.form['url'])
+    print(request.form['url'].split(','))
     print(request.form['exclude'])
-    url = 'https://en.wikipedia.org/wiki/Donald_Trump'
+    
+    url = request.form['url'].split(',')
+
     return Driver.crawler(url)
 
 @app.route('/api/arne/is/gay/and/bachelor', methods=['GET', 'POST'])

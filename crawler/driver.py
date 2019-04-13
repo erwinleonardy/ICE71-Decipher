@@ -14,36 +14,39 @@ class Driver():
         return jsonify({'Arne the Project Manager who does nothing': text})
 
     @staticmethod
-    def crawler(url):
-        response = requests.get(url, timeout=5)
+    def crawler(urls):
+        result = []
 
-        soup = BeautifulSoup(response.content, "html.parser")
+        for url in urls:
+            response = requests.get(url, timeout=5)
 
-        all_links = soup.find_all("p")
+            soup = BeautifulSoup(response.content, "html.parser")
 
-        str_cells = str(all_links)
-        cleantext = BeautifulSoup(str_cells, "lxml").get_text()
+            all_links = soup.find_all("p")
 
-        processed = re.sub('\[[A-Za-z0-9]*\]', '', cleantext)
-        processed = re.sub('  ', ' ', cleantext)
-        processed = re.sub('[^a-zA-Z ]', '', processed)
-        processed = re.sub('[\n]', '', processed)
+            str_cells = str(all_links)
+            cleantext = BeautifulSoup(str_cells, "lxml").get_text()
 
-        import nltk
-        nltk.download('stopwords')
-        from nltk.corpus import stopwords
+            processed = re.sub('\[[A-Za-z0-9]*\]', '', cleantext)
+            processed = re.sub('  ', ' ', cleantext)
+            processed = re.sub('[^a-zA-Z ]', '', processed)
+            processed = re.sub('[\n]', '', processed)
 
-        # Bring in the default English NLTK stop words
-        stoplist = stopwords.words('english')
+            import nltk
+            nltk.download('stopwords')
+            from nltk.corpus import stopwords
 
-        # Apply the stoplist to the text
-        processed = [word for word in processed.lower().split() if word not in stoplist]
+            # Bring in the default English NLTK stop words
+            stoplist = stopwords.words('english')
+
+            # Apply the stoplist to the text
+            processed = [word for word in processed.lower().split() if word not in stoplist]
+            
+            processed = ' '.join([word for word in processed if len(processed) > 1])
+
+            result.append(processed)
         
-        processed = ' '.join([word for word in processed if len(processed) > 1])
-
-        # print(processed)
-
-        return jsonify(processed)
+        return jsonify(result)
 
     @staticmethod
     def simple_get(url):
