@@ -4,7 +4,6 @@ import urllib.request
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
-from nltk.corpus import stopwords
 
 from flask import jsonify
 
@@ -29,6 +28,10 @@ class Driver():
         processed = re.sub('  ', ' ', cleantext)
         processed = re.sub('[^a-zA-Z ]', '', processed)
         processed = re.sub('[\n]', '', processed)
+
+        import nltk
+        nltk.download('stopwords')
+        from nltk.corpus import stopwords
 
         # Bring in the default English NLTK stop words
         stoplist = stopwords.words('english')
