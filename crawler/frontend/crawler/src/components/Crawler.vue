@@ -36,7 +36,7 @@
         </div>
 
         <!-- Password -->
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label for="password" class="col-md-4 col-form-label text-md-right">
                 Password
             </label>
@@ -51,17 +51,17 @@
                     required autofocus
                 >
             </div>
-        </div>
+        </div> -->
 
         <div class="form-group row tw-my-6">
             <div class="col-md-6 offset-md-4">
                 <div v-if = "!isLoading">
-                    <button type="submit" class="btn btn-primary" @click ="register()" >
-                        Register
+                    <button type="submit" class="btn btn-primary" @click ="crawl()" >
+                        Crawl 
                     </button>
                 </div>
                 <div v-else>
-                    <img src = "/assets/img/loader.gif" alt = "Loading...">
+                    <img src = "../assets/img/loader.gif" alt = "Loading...">
                 </div>
             </div>
         </div>
@@ -76,6 +76,7 @@
         data() {
             return {
                 url: '',
+                exclude: '',
                 error: [],
                 isLoading: false,
             }
@@ -85,18 +86,18 @@
             crawl() {
                 this.isLoading = true;
 
-                axios.post("/crawl", {
-                    url: this.url,
-                    exclude: this.exclude
-                })
-                .then(response => {
-                    //    this.$router.replace( "/login");
-                    this.isLoading = false;
-                })
-                .catch((error) => {
-                    // this.error = error.response.data.errors;
-                    this.isLoading = false;
-                });
+                // axios.post("/crawl", {
+                //     url: this.url,
+                //     exclude: this.exclude
+                // })
+                // .then(response => {
+                //     //    this.$router.replace( "/login");
+                //     this.isLoading = false;
+                // })
+                // .catch((error) => {
+                //     // this.error = error.response.data.errors;
+                //     this.isLoading = false;
+                // });
             },
         }
     }
