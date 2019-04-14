@@ -169,6 +169,7 @@
                             </div>
 
                             <div class="">
+                                <meter :value="strPercentile"></meter><br>
                                 {{this.strength}}
                             </div>
                         </div>
@@ -199,7 +200,6 @@
                 exclude: '',
                 dictionary: '',
                 tokenizeWord: [],
-
                 filtered: '',
             }
         },
@@ -222,6 +222,10 @@
 
             trueEnthropy() {
                 return this.scorePassword(this.filtered.toLowerCase());  
+            },
+
+            strPercentile() {
+                return this.trueEnthropy/150;
             },
 
             enthropy() {
@@ -277,13 +281,18 @@
             },
 
             verifyPassword() {
-                var str = this.password;    
+                var str = this.password.toLowerCase();    
+                console.log(str);
                 this.tokenizeWord.forEach(word =>{
-                    var regex = new RegExp( word, 'g' );
+                    var tmpWord = word.toLowerCase();
+
+                    var regex = new RegExp( tmpWord, 'g' );
                     var result = str.match(regex);
+                    console.log(result);
 
                     if (result){
-                        str = str.replace(result,'');
+                        console.log(result);
+                        str = str.replace(word.toLowerCase(),'');
                     }
                 });
                 this.filtered = str;
