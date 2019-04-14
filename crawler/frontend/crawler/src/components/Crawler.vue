@@ -209,6 +209,9 @@
                 var tmp = this.dictionary.substr(5).slice(0, -1);
                 tmp = tmp.toLowerCase();
                 this.tokenizeWord = tmp.split(' ');
+                this.tokenizeWord = this.tokenizeWord.sort(function(a, b){
+                    return b.length - a.length;
+                });
             },
         },
 
