@@ -14,36 +14,51 @@ class Driver():
         return jsonify({'Arne the Project Manager who does nothing': text})
 
     @staticmethod
-    def crawler(url):
-        response = requests.get(url, timeout=5)
+    def crawler(urls, excludes):
+        result = []
+        cleaned = []
 
-        soup = BeautifulSoup(response.content, "html.parser")
+        print (urls)
 
-        all_links = soup.find_all("p")
+        for url in urls:
+            response = requests.get(url, timeout=5)
 
-        str_cells = str(all_links)
-        cleantext = BeautifulSoup(str_cells, "lxml").get_text()
+            soup = BeautifulSoup(response.content, "html.parser")
 
-        processed = re.sub('\[[A-Za-z0-9]*\]', '', cleantext)
-        processed = re.sub('  ', ' ', cleantext)
-        processed = re.sub('[^a-zA-Z ]', '', processed)
-        processed = re.sub('[\n]', '', processed)
+            all_links = soup.find_all("p")
 
-        import nltk
-        nltk.download('stopwords')
-        from nltk.corpus import stopwords
+            str_cells = str(all_links)
+            cleantext = BeautifulSoup(str_cells, "lxml").get_text()
 
-        # Bring in the default English NLTK stop words
-        stoplist = stopwords.words('english')
+            processed = re.sub('\[[A-Za-z0-9]*\]', '', cleantext)
+            processed = re.sub('  ', ' ', cleantext)
+            processed = re.sub('[^a-zA-Z ]', '', processed)
+            processed = re.sub('[\n]', '', processed)
 
-        # Apply the stoplist to the text
-        processed = [word for word in processed.lower().split() if word not in stoplist]
+            import nltk
+            nltk.download('stopwords')
+            from nltk.corpus import stopwords
+
+            # Bring in the default English NLTK stop words
+            stoplist = stopwords.words('english')
+
+            # Apply the stoplist to the text
+            processed = [word for word in processed.lower().split() if word not in stoplist]
+            
+            # Remove single character
+            processed = ' '.join([word for word in processed if len(processed) > 1])
+
+            result.append(processed)
         
-        processed = ' '.join([word for word in processed if len(processed) > 1])
+        # Remove everything, except keyword
+        for entry in result:
+            for exclude in excludes:
+                entry = entry.replace(exclude.lower(), '')
+            cleaned.append(entry)
 
-        # print(processed)
-
-        return jsonify(processed)
+        if not excludes:
+            return jsonify(result)
+        return jsonify(cleaned)
 
     @staticmethod
     def simple_get(url):
