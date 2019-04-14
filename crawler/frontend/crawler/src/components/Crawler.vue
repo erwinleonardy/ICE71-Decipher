@@ -206,7 +206,8 @@
 
         watch:{
             dictionary() {
-                var tmp = this.dictionary.substr(1).slice(0, -1);
+                var tmp = this.dictionary.substr(5).slice(0, -1);
+                tmp = tmp.toLowerCase();
                 this.tokenizeWord = tmp.split(' ');
             },
         },
@@ -217,11 +218,11 @@
             },
 
             trueEnthropy() {
-                return this.scorePassword(this.filtered);  
+                return this.scorePassword(this.filtered.toLowerCase());  
             },
 
             enthropy() {
-                return this.scorePassword(this.password);  
+                return this.scorePassword(this.password.toLowerCase());  
             },
             
             strength() {
