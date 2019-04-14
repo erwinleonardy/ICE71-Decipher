@@ -114,18 +114,63 @@
             <div class="w-2/5">
                 <div class="card">
                     <div class="card-header tw-text-grey-darker">Results</div>
-                    <div class="flex items-center my-4">                
-                        <div class = "w-48 ml-32 text-lg font-semibold font-montserrat text-grey-dark">
-                            Result
+                    <div v-if = "tokenizeWord.length > 0">
+                        <div class="flex items-center my-4">                
+                            <div class = "w-48 ml-32 text-lg font-semibold font-montserrat text-grey-dark">
+                                Filtered password
+                            </div>
+
+                            <div class="">
+                                <input type ="text"
+                                    id="filtered" 
+                                    v-model = "filtered"
+                                    class="border rounded p-2 w-full border-grey" 
+                                    required autofocus
+                                    disabled
+                                >
+                            </div>
                         </div>
 
-                        <div class="">
-                            <input type ="text"
-                                id="password" 
-                                v-model = "password"
-                                class="border rounded p-2 w-full border-grey" 
-                                required autofocus
-                            >
+                        <div class="flex items-center my-4">                
+                            <div class = "w-48 ml-32 text-lg font-semibold font-montserrat text-grey-dark">
+                                Enthropy
+                            </div>
+
+                            <div class="">
+                                <input type ="text"
+                                    id="enthropy" 
+                                    v-model = "enthropy"
+                                    class="border rounded p-2 w-full border-grey" 
+                                    required autofocus
+                                    disabled
+                                >
+                            </div>
+                        </div>
+
+                        <div class="flex items-center my-4">                
+                            <div class = "w-48 ml-32 text-lg font-semibold font-montserrat text-grey-dark">
+                                True Enthropy
+                            </div>
+
+                            <div class="">
+                                <input type ="text"
+                                    id="trueEnthropy" 
+                                    v-model = "trueEnthropy"
+                                    class="border rounded p-2 w-full border-grey" 
+                                    required autofocus
+                                    disabled
+                                >
+                            </div>
+                        </div>
+
+                        <div class="flex items-center my-4">                
+                            <div class = "w-48 ml-32 text-lg font-semibold font-montserrat text-grey-dark">
+                                Password Strength
+                            </div>
+
+                            <div class="">
+                                {{this.strength}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -154,13 +199,41 @@
                 exclude: '',
                 dictionary: '',
                 tokenizeWord: [],
+
+                filtered: '',
             }
         },
 
         watch:{
             dictionary() {
-                this.tokenizeWord = this.dictionary.split(' ');
+                var tmp = this.dictionary.substr(1).slice(0, -1);
+                this.tokenizeWord = tmp.split(' ');
+            },
+        },
+
+        computed:{
+            length() {
+                return this.filtered.length;
+            },
+
+            trueEnthropy() {
+                return this.scorePassword(this.filtered);  
+            },
+
+            enthropy() {
+                return this.scorePassword(this.password);  
+            },
+            
+            strength() {
+                if(this.enthropy > 80)
+                    return "strong";
+                else if(this.entropy > 60 )
+                    return "good";
+                else
+                    return "weak";
+                
             }
+
         },
 
         methods: {
@@ -174,6 +247,8 @@
             crawl() {
                 this.isLoading = true;
 
+                var scope = this;
+
                 $.ajax({
                     type: 'post',
                     url: 'http://127.0.0.1:5000/crawl',
@@ -183,95 +258,61 @@
                 //     // contentType: false,
                     success: function(data, status, jqXHR) {
                         console.log(data)
-                        this.isLoading = false;
+                        scope.isLoading = false;
+                        scope.dictionary = data;
                     },
                     error: function(jqXHR, status, err) {
                         console.log(err);
-                        this.isLoading = false;
+                        scope.isLoading = false;
                     },
-                    complete: function(jqXHR, status) {}
+                    complete: function(jqXHR, status) {
+                        scope.isLoading = false;
+                    }
                 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // fd.append('url', this.url);
-                // fd.append('exclude', this.exclude);
-
-                // const config = {
-                //     headers: { 'Access-Control-Allow-Origin': '*' , 
-                //     // 'content-type': 'application/json; charset=utf-8' 
-                //         'Content-Type': 'multipart/form-data'
-                //     },
-                //     // mimeType: 'multipart/form-data',
-                //     // contentType: false
-                // };
-
-                // axios.post('http://127.0.0.1:5000/crawl', fd, config)
-                // .then((res) => {
-                //     this.isLoading = false;
-                // })
-                // .catch((error) => {
-                //     this.error = error.response.data.errors;
-                //     this.isLoading = false;
-                // })
-
-
-                
-                // // const config = {
-                // //     headers: { 'Access-Control-Allow-Origin': '*' , 
-
-                // //     // 'content-type': 'application/json; charset=utf-8' 
-                // //     },
-                // //     mimeType: 'multipart/form-data'
-                // // };
-
-                // axios.post("http://127.0.0.1:5000/crawl",{
-                //     url: this.url,
-                //     exclude: this.exclude
-                // },config)
-                // .then(response => {
-                //     console.log(response);
-                //     this.dictionary = response.data;
-                //     this.isLoading = false;
-                //     //    this.$router.replace( "/action?");
-                // })
-                // .catch((error) => {
-                //     // this.error = error.response.data.errors;
-                //     this.isLoading = false;
-                // });
             },
 
             verifyPassword() {
-                this.tokenizeWord.forEach( word =>{
-                    word.match(/this.password/);
-                    console.log(word);
-                    // this.password
+                var str = this.password;    
+                this.tokenizeWord.forEach(word =>{
+                    var regex = new RegExp( word, 'g' );
+                    var result = str.match(regex);
+
+                    if (result){
+                        str = str.replace(result,'');
+                    }
                 });
+                this.filtered = str;
             },
+
+            scorePassword(pass) {
+                var score = 0;
+                if (!pass)
+                    return score;
+
+                // award every unique letter until 5 repetitions
+                var letters = new Object();
+                for (var i=0; i<pass.length; i++) {
+                    letters[pass[i]] = (letters[pass[i]] || 0) + 1;
+                    score += 5.0 / letters[pass[i]];
+                }
+
+                // bonus points for mixing it up
+                var variations = {
+                    digits: /\d/.test(pass),
+                    lower: /[a-z]/.test(pass),
+                    upper: /[A-Z]/.test(pass),
+                    nonWords: /\W/.test(pass),
+                }
+
+                var variationCount = 0;
+                for (var check in variations) {
+                    variationCount += (variations[check] == true) ? 1 : 0;
+                }
+                score += (variationCount - 1) * 10;
+
+                return parseInt(score);
+            }
         }
     }
 </script>
